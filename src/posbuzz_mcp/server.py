@@ -21,8 +21,8 @@ except ImportError:  # FastMCP 2.x
 
 logger = logging.getLogger("posbuzz_mcp")
 
-DEFAULT_BASE_URL = "http://localhost:3000"
-DEFAULT_SPEC_URL = "http://localhost:3000/api-docs/v1/openapi.yaml"
+DEFAULT_BASE_URL = "https://pos-buzz.com"
+DEFAULT_SPEC_URL = "https://pos-buzz.com/api-docs/v1/openapi.yaml"
 DEFAULT_MCP_NAME = "posbuzz-mcp"
 
 

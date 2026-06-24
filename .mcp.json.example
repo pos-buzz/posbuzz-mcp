@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "posbuzz": {
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/pos-buzz/posbuzz-mcp@main", "posbuzz-mcp"],
+      "env": {
+        "SAAS_API_KEY": "sa_your_api_key"
+      }
+    }
+  }
+}
