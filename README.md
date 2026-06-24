@@ -53,14 +53,11 @@ Set configuration via environment variables.
 
 | Variable | Required | Default | Purpose |
 | --- | --- | --- | --- |
-| `SAAS_API_KEY` | yes¹ | — | SaaS API bearer token (`sa_...`) |
-| `API_TOKEN` | yes¹ | — | Alternative name for the bearer token |
+| `SAAS_API_KEY` | yes | — | SaaS API bearer token (`sa_...`) |
 | `API_BASE_URL` | no | `http://localhost:3000` | SaaS API base URL |
 | `OPENAPI_SPEC_URL` | no | `http://localhost:3000/api-docs/v1/openapi.yaml` | OpenAPI spec URL (YAML or JSON) |
 | `MCP_NAME` | no | `posbuzz-mcp` | MCP server name shown to the client |
 | `LOG_LEVEL` | no | `INFO` | Logging level (e.g. `DEBUG`) |
-
-¹ Set **either** `SAAS_API_KEY` or `API_TOKEN`.
 
 Copy `.env.example` to `.env` for local reference (the `.env` file is gitignored
 and is **not** read automatically — pass values via your MCP client's `env`).
@@ -126,22 +123,15 @@ After editing the config, **restart your MCP client**.
 
 ### Available tools
 
-Derived from the current spec (Social Analytics API v1):
-
-- Read current token usage (`/api/v1/token-usage`)
-- List / create / read workspaces (`/api/v1/workspaces`, `/api/v1/workspaces/{id}`)
-- Start a workspace run (`/api/v1/workspaces/{workspace_id}/runs`)
-- Read run status (`/api/v1/runs/{token}`)
-- Read paginated social (SNS) results (`/api/v1/runs/{token}/social-results`)
-- Read a completed-run summary (`/api/v1/runs/{token}/result-summary`)
-- Read paginated social accounts (`/api/v1/runs/{token}/social-accounts`)
-- Read paginated EC results (`/api/v1/runs/{token}/ec-results`)
+The available tools are generated from the SaaS OpenAPI spec at startup, so they
+always match the current API. For the full list of endpoints and their parameters,
+see the **API Doc**.
 
 ### Destructive / write operations
 
-Currently the only write operations are the two `POST`s — **create a workspace**
-and **start a run** (which consumes quota). Everything else is read-only. Review
-arguments before approving these calls in your client.
+Some tools map to write operations (e.g. `POST` endpoints), and some of these may
+consume quota. Refer to the API Doc to see which endpoints write or have side
+effects, and review arguments before approving these calls in your client.
 
 ## Security
 
@@ -155,7 +145,7 @@ arguments before approving these calls in your client.
 - **`Failed to fetch OpenAPI spec ...`** — the SaaS app isn't reachable or
   `OPENAPI_SPEC_URL` is wrong. Verify with
   `curl http://localhost:3000/api-docs/v1/openapi.yaml`.
-- **`SAAS_API_KEY (or API_TOKEN) is required`** — no token in the environment
+- **`SAAS_API_KEY is required`** — no token in the environment
   passed to the server. Add it to your MCP client's `env`.
 - **401 Unauthorized on tool calls** — the key is invalid or revoked. Issue a new
   one in Settings → Developer API.

@@ -27,9 +27,9 @@ DEFAULT_MCP_NAME = "posbuzz-mcp"
 
 
 def _get_token() -> str:
-    token = os.environ.get("SAAS_API_KEY") or os.environ.get("API_TOKEN")
+    token = os.environ.get("SAAS_API_KEY")
     if not token:
-        raise SystemExit("SAAS_API_KEY (or API_TOKEN) is required")
+        raise SystemExit("SAAS_API_KEY is required")
     return token
 
 
