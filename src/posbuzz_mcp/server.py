@@ -22,7 +22,7 @@ except ImportError:  # FastMCP 2.x
 logger = logging.getLogger("posbuzz_mcp")
 
 DEFAULT_BASE_URL = "https://pos-buzz.com"
-DEFAULT_SPEC_URL = "https://pos-buzz.com/api-docs/v1/openapi.yaml"
+OPENAPI_SPEC_PATH = "/api-docs/v1/openapi.yaml"
 DEFAULT_MCP_NAME = "posbuzz-mcp"
 
 
@@ -57,7 +57,7 @@ def build_server() -> FastMCP:
 
     token = _get_token()
     base_url = os.environ.get("API_BASE_URL", DEFAULT_BASE_URL)
-    spec_url = os.environ.get("OPENAPI_SPEC_URL", DEFAULT_SPEC_URL)
+    spec_url = base_url + OPENAPI_SPEC_PATH
     name = os.environ.get("MCP_NAME", DEFAULT_MCP_NAME)
 
     logger.info("Fetching OpenAPI spec from %s", spec_url)

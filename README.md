@@ -91,8 +91,7 @@ Set configuration via environment variables (via your MCP client's `env`).
 | Variable | Required | Default | Purpose |
 | --- | --- | --- | --- |
 | `SAAS_API_KEY` | yes | — | SaaS API bearer token (`sa_...`) |
-| `API_BASE_URL` | no | `https://pos-buzz.com` | SaaS API base URL |
-| `OPENAPI_SPEC_URL` | no | `https://pos-buzz.com/api-docs/v1/openapi.yaml` | OpenAPI spec URL (YAML or JSON) |
+| `API_BASE_URL` | no | `https://pos-buzz.com` | SaaS API base URL (spec is fetched from `<API_BASE_URL>/api-docs/v1/openapi.yaml`) |
 | `MCP_NAME` | no | `posbuzz-mcp` | MCP server name shown to the client |
 | `LOG_LEVEL` | no | `INFO` | Logging level (e.g. `DEBUG`) |
 
@@ -128,7 +127,6 @@ override the URLs in your `env`:
 
 ```bash
 API_BASE_URL=http://localhost:3000 \
-OPENAPI_SPEC_URL=http://localhost:3000/api-docs/v1/openapi.yaml \
 uv run posbuzz-mcp
 ```
 
@@ -144,7 +142,7 @@ for a pip install just `"command": "posbuzz-mcp"`.
 
 ## How it works
 
-- The OpenAPI spec is fetched **at startup** from `OPENAPI_SPEC_URL`.
+- The OpenAPI spec is fetched **at startup** from `<API_BASE_URL>/api-docs/v1/openapi.yaml`.
 - Spec changes take effect only after you **restart the server** (restart the MCP
   client, or restart the process). There is no live watching or regeneration.
 - The available tools are derived entirely from the SaaS OpenAPI spec. As the SaaS
@@ -172,7 +170,7 @@ effects, and review arguments before approving these calls in your client.
 ## Troubleshooting
 
 - **`Failed to fetch OpenAPI spec ...`** — the SaaS app isn't reachable or
-  `OPENAPI_SPEC_URL` is wrong. Verify with
+  `API_BASE_URL` is wrong. Verify with
   `curl http://localhost:3000/api-docs/v1/openapi.yaml`.
 - **`SAAS_API_KEY is required`** — no token in the environment
   passed to the server. Add it to your MCP client's `env`.
